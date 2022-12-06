@@ -1,3 +1,5 @@
+
+/* Data for Part 1 */
 const calList = `5104
 6131
 3553
@@ -2254,12 +2256,13 @@ const calList = `5104
 3806
 9333`
 
+/* Solution for Part 1 */
+// Data manipulation
 const calListArr = calList.split(/\r\n|\n\r|\n|\r/g)
 const calListArrOfNums = calListArr.map(e => e * 1);
-// console.log(calListArrOfNums)
 
+// Function to calculate elf with most calories. This function will iterate through this array, totalling the calories until it get to an empty space. it will then assign that total to a value and move on to the next set between spaces. if the total of the next set it more than the current max calorie count, it replaces it, otherwise it does nothing and moves to the next.
 function fattestElf(arr) {
-    // This function will iterate through this array, totalling the calories until it get to an empty space. it will then assign that total to a value and move on to the next set between spaces. if the total of the next set it more than the current max calorie count, it replaces it, otherwise it does nothing and moves to the next.
     let maxTotalCals = 0;
     let runningTotal = 0;
     arr.forEach(function(num) {
@@ -2274,4 +2277,33 @@ function fattestElf(arr) {
     })
     return maxTotalCals;
 }
-console.log(fattestElf(calListArrOfNums))
+console.log('fattest elf: ', fattestElf(calListArrOfNums))
+
+
+/* Solution for Part 2 */
+
+function fattestThreeElves(arr) {
+    let firstElf = 0;
+    let secondElf = 0;
+    let thirdElf = 0;
+    let runningTotal = 0;
+    arr.forEach(function(num) {
+        if (num) {
+            runningTotal += num;
+        } else {
+            if (runningTotal > firstElf) {
+                thirdElf = secondElf;
+                secondElf = firstElf;
+                firstElf = runningTotal;
+            } else if (runningTotal > secondElf) {
+                thirdElf = secondElf;
+                secondElf = runningTotal;
+            } else if (runningTotal > thirdElf) {
+                thirdElf = runningTotal;
+            }
+            runningTotal = 0;
+        }
+    })
+    return firstElf+secondElf+thirdElf;
+}
+console.log('fattest three elves: ', fattestThreeElves(calListArrOfNums))
