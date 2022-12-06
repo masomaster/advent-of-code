@@ -1,5 +1,5 @@
 
-/* Data for Part 1 */
+/* Data for Day 1 */
 const calList = `5104
 6131
 3553
