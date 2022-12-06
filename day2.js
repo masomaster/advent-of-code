@@ -2577,5 +2577,71 @@ function RPSScore(plan) {
 }
 console.log(RPSScore(STRATEGY_GUIDE_ARR))
 
-/* Solution for Part 1 */
+/* Solution for Part 2 */
 
+// Function to calculate total score of Rock, Paper, Scissors played according to CORRECT interpretation of strategy guide
+function RPSScoreCorrectInterpretation(plan) {
+    let totalScore = 0;
+    // for each loop on plan
+    plan.forEach(function(move) {
+        const oppMove = move[0][0];
+        const outcome = move[0][1];
+        let shapeScore = 0;
+        let outcomeScore = 0;
+        // if opponent is rock
+        if (oppMove === 'A') {
+            // if outcome is lose
+            if (outcome === 'X') {
+                shapeScore = 3;
+            }
+            // if outcome is draw
+            else if (outcome === 'Y') {
+                shapeScore = 1;
+                outcomeScore = 3;
+            }
+            // if outcome is win
+            else {
+                shapeScore = 2;
+                outcomeScore = 6;
+            }
+        }
+
+        // else if opponent is paper
+        else if (oppMove === 'B') {
+            // if outcome is lose
+            if (outcome === 'X') {
+                shapeScore = 1;
+            }
+            // if outcome is draw
+            else if (outcome === 'Y') {
+                shapeScore = 2;
+                outcomeScore = 3;
+            }
+            // if outcome is win
+            else {
+                shapeScore = 3;
+                outcomeScore = 6;
+            }
+        }
+        // else (scissors)
+        else {
+              // if outcome is lose
+              if (outcome === 'X') {
+                shapeScore = 2;
+            }
+            // if outcome is draw
+            else if (outcome === 'Y') {
+                shapeScore = 3;
+                outcomeScore = 3;
+            }
+            // if outcome is win
+            else {
+                shapeScore = 1;
+                outcomeScore = 6;
+            }
+        }
+        totalScore = totalScore + shapeScore + outcomeScore;
+    })
+    return totalScore;
+}
+console.log(RPSScoreCorrectInterpretation(STRATEGY_GUIDE_ARR))
