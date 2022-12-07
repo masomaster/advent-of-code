@@ -330,4 +330,36 @@ function calculatePriority(char) {
     return CHAR_PRIORITIES.findIndex(e => e === char);
 }
 
-console.log(findSumOfPriorities(RUCKSACK_CONTENTS_ARR))
+// console.log(findSumOfPriorities(RUCKSACK_CONTENTS_ARR))
+
+/* Solution for Part 2 */
+
+function findElfBadgePriorities(arr) {
+    let sum = 0;
+    let count = 1;
+    let threeSacks = [];
+    arr.forEach((sack, idx) => {
+        if (count === 3) {
+            threeSacks.push(sack);
+            sum += calculatePriority(findCommonCharInThreeSacks(threeSacks));
+            count = 1;
+            threeSacks = [];
+        } else {
+            threeSacks.push(sack);
+            count++;
+        }
+    })
+    return sum;
+}
+
+function findCommonCharInThreeSacks(arr) {
+    let str1 = arr[0];
+    let str2 = arr[1];
+    let str3 = arr[2];
+    for (let i = 0; i < str1.length; i++) {
+        if (str2.includes(str1.charAt(i)) && str3.includes(str1.charAt(i))) return str1.charAt(i);
+    }
+    return 0;
+}
+
+// console.log(findElfBadgePriorities(RUCKSACK_CONTENTS_ARR))
