@@ -1000,23 +1000,38 @@ const PAIR_ASSIGNMENTS = `8-17,16-49
 42-83,78-79
 5-17,4-67`
 
+const TEST_OVERLAP = `5-7,7-9
+2-8,9-10
+6-6,4-6
+2-6,4-8`
+
 // Data manipulation
 const PAIR_ASSIGNMENTS_ARRAY = PAIR_ASSIGNMENTS.split(/\r\n|\n\r|\n|\r/g)
+const TEST_OVERLAP_ARRAY = TEST_OVERLAP.split(/\r\n|\n\r|\n|\r/g)
 // console.log(PAIR_ASSIGNMENTS_ARRAY[0]) => 8-17,16-49
 
 /* Solution for Part 1 */
 function comparePairs(allPairAssignments) {
-    let count = 0;
+    let countContains = 0;
+    let countOverlaps = 0;
     allPairAssignments.forEach(function(pair) {
         const pairAssignmentsObj = parseElfPairs(pair);
-        if (compareRanges(pairAssignmentsObj)) {
+        if (compareRangesContain(pairAssignmentsObj)) {
             console.log(pair, "fully contains");
-            count++;
+            countContains++;
         } else {
             console.log(pair, "doesn't fully contain");
         }
+        if (compareRangesOverlap(pairAssignmentsObj)) {
+            console.log(pair, "overlaps");
+            countOverlaps++;
+        } else {
+            console.log(pair, "doesn't overlap");
+        }
     })
-    return count;
+    return {
+        "countContains": countContains,
+        "countOverlaps": countOverlaps};
 }
 console.log(comparePairs(PAIR_ASSIGNMENTS_ARRAY))
 
@@ -1032,7 +1047,7 @@ function parseElfPairs(pairAssignments) {
     return [elf1, elf2];
 }
 
-function compareRanges(pairAssignmentsObj) {
+function compareRangesContain(pairAssignmentsObj) {
     const elf1 = pairAssignmentsObj[0];
     const elf2 = pairAssignmentsObj[1];
     if ((elf1.min >= elf2.min && elf1.max <= elf2.max)
@@ -1045,3 +1060,18 @@ function compareRanges(pairAssignmentsObj) {
 }
 
 /* Solution for Part 2 */
+function compareRangesOverlap(pairAssignmentsObj) {
+    const elf1 = pairAssignmentsObj[0];
+    const elf2 = pairAssignmentsObj[1];
+    if ((elf2.min <= elf1.min && elf1.min <= elf2.max)
+        ||
+        (elf2.min <= elf1.max && elf1.max <= elf2.max)
+        ||
+        (elf1.min <= elf2.min && elf2.min <= elf1.max)
+        ||
+        (elf1.min <= elf2.max && elf2.max <= elf1.max)) {
+            return true;
+    } else {
+        return false;
+    }
+}
