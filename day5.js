@@ -8,6 +8,7 @@ const stack6 = ['T', 'F', 'S', 'Z', 'B', 'G'];
 const stack7 = ['N', 'R', 'V'];
 const stack8 = ['P', 'G', 'L', 'T', 'D', 'V', 'C', 'M'];
 const stack9 = ['W', 'Q', 'N', 'J', 'F', 'M', 'L'];
+const stacks = [[], stack1, stack2, stack3, stack4, stack5, stack6, stack7, stack8, stack9]
 
 
 const INSTRUCTIONS = `move 7 from 3 to 9
@@ -533,6 +534,33 @@ const INSTRUCTIONS_ARRAY = INSTRUCTIONS.split(/\r\n|\n\r|\n|\r/g).map(function(s
 })
 
 /* Solution for Part 1 */
+function processAllInstructions(allInstructionsArr) {
+    allInstructionsArr.forEach(function(instr) {
+        handleOneInstructionLine(instr);
+    })
+    console.log('stack1: ', stacks[1])
+    console.log('stack2: ', stacks[2])
+    console.log('stack3: ', stacks[3])
+    console.log('stack4: ', stacks[4])
+    console.log('stack5: ', stacks[5])
+    console.log('stack6: ', stacks[6])
+    console.log('stack7: ', stacks[7])
+    console.log('stack8: ', stacks[8])
+    console.log('stack9: ', stacks[9])
+}
 
+function handleOneInstructionLine(instructionsArr) {
+    let count = instructionsArr[0];
+    while (count > 0) {
+        moveOneCrate(instructionsArr[1], instructionsArr[2])
+        count--;
+    }
+}
+
+function moveOneCrate(fromStack, toStack) {
+    const movingCrate = stacks[fromStack].pop()
+    stacks[toStack].push(movingCrate)
+}
+processAllInstructions(INSTRUCTIONS_ARRAY)
 
 /* Solution for Part 2 */
