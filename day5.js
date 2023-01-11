@@ -538,15 +538,15 @@ function processAllInstructions(allInstructionsArr) {
     allInstructionsArr.forEach(function(instr) {
         handleOneInstructionLine(instr);
     })
-    console.log('stack1: ', stacks[1])
-    console.log('stack2: ', stacks[2])
-    console.log('stack3: ', stacks[3])
-    console.log('stack4: ', stacks[4])
-    console.log('stack5: ', stacks[5])
-    console.log('stack6: ', stacks[6])
-    console.log('stack7: ', stacks[7])
-    console.log('stack8: ', stacks[8])
-    console.log('stack9: ', stacks[9])
+    // console.log('stack1: ', stacks[1])
+    // console.log('stack2: ', stacks[2])
+    // console.log('stack3: ', stacks[3])
+    // console.log('stack4: ', stacks[4])
+    // console.log('stack5: ', stacks[5])
+    // console.log('stack6: ', stacks[6])
+    // console.log('stack7: ', stacks[7])
+    // console.log('stack8: ', stacks[8])
+    // console.log('stack9: ', stacks[9])
 }
 
 function handleOneInstructionLine(instructionsArr) {
@@ -561,6 +561,30 @@ function moveOneCrate(fromStack, toStack) {
     const movingCrate = stacks[fromStack].pop()
     stacks[toStack].push(movingCrate)
 }
-processAllInstructions(INSTRUCTIONS_ARRAY)
+// processAllInstructions(INSTRUCTIONS_ARRAY)
 
 /* Solution for Part 2 */
+function processAllInstructions_9001(allInstructionsArr) {
+    allInstructionsArr.forEach(function(instr) {
+        handleOneInstructionLine_9001(instr);
+    })
+    console.log('stack1: ', stacks[1])
+    console.log('stack2: ', stacks[2])
+    console.log('stack3: ', stacks[3])
+    console.log('stack4: ', stacks[4])
+    console.log('stack5: ', stacks[5])
+    console.log('stack6: ', stacks[6])
+    console.log('stack7: ', stacks[7])
+    console.log('stack8: ', stacks[8])
+    console.log('stack9: ', stacks[9])
+}
+
+function handleOneInstructionLine_9001(instructionsArr) {
+    const count = instructionsArr[0];
+    const fromCrate = stacks[instructionsArr[1]];
+    const toCrate = stacks[instructionsArr[2]];
+    stacks[instructionsArr[2]] = toCrate.concat(fromCrate.slice(fromCrate.length-count));
+    stacks[instructionsArr[1]].splice(fromCrate.length-count)
+}
+
+processAllInstructions_9001(INSTRUCTIONS_ARRAY)
