@@ -5,11 +5,10 @@ const DATASTREAM_BUFFER = "cdhccdbdggfjjgssjzjzggjnjpnpbbzbnzzflfjfnfrrpvrvbrvvr
 function findStartOfPacketMarker(arr) {
     // set up temp array, includes each of first four letters in datastream buffer
     let fourChar = [];
-    let index;
+    let index, duplicates;
     for (let i = 0; i < 4; i++) {
         fourChar.push(arr[i])
     }
-    console.log(fourChar)
 
     // for loop through datastream buffer (starting at 4)
     for (let i = 4; i < arr.length; i++) {
@@ -20,17 +19,23 @@ function findStartOfPacketMarker(arr) {
         // check if array.includes buffer[i], if so push buffer[i] to array
         if (fourChar.includes(arr[i])) {
             fourChar.push(arr[i])
+            duplicates = 3;
         // if not, return i
         } else {
-            console.log(fourChar, i, arr[i])
-            index = i;
-            break;
+            if (!duplicates) {
+                index = i;
+                console.log(fourChar, DATASTREAM_BUFFER[index], index - 1)
+                break;
+            } else {
+                duplicates--;
+                fourChar.push(arr[i])
+            }
+
         }
     }
-    return index;
+    return index - 1;
 }
-console.log(findStartOfPacketMarker(DATASTREAM_BUFFER));
-
+findStartOfPacketMarker(DATASTREAM_BUFFER);
 
 /* Solution for Part 2 */
 
