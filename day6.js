@@ -35,14 +35,28 @@ function findStartOfPacketMarker(arr) {
     }
     return index - 1;
 }
-findStartOfPacketMarker(DATASTREAM_BUFFER);
+// findStartOfPacketMarker(DATASTREAM_BUFFER);
 
 /* Solution for Part 2 */
+function findStartOfMessageMarker(arr) {
+    // set up temp array, includes each of first fourteen letters in datastream buffer
 
+    let fourteenChar = [];
+    for (let i = 0; i < 14; i++) {
+        fourteenChar.push(arr[i])
+    }
 
-// if (fourChar.includes(DATASTREAM_BUFFER[i])) {
-    //         fourChar.push(DATASTREAM_BUFFER[i])
-    //     } else {
-    //         fourChar.push(DATASTREAM_BUFFER[i])
-    //         unique = true;
-    //     }
+    // for loop through datastream buffer (starting at 14)
+    for (let i = 14; i < arr.length; i++) {
+
+        // use a Set here to check if all fourteen characters in the array can be added to a Set that is 14 characters long!!!
+        fourteenChar.shift();
+        fourteenChar.push(arr[i])
+        let uniqueSet = new Set(fourteenChar)
+        if (uniqueSet.size === 14) {
+            return i + 1;
+        }
+    }
+    return -1;
+}
+console.log(findStartOfMessageMarker(DATASTREAM_BUFFER));
